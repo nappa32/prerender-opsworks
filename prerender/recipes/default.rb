@@ -2,7 +2,6 @@
 %w(git fontconfig fontconfig1-dev fontconfig1 screen zsh nodejs npm).each do |pkg|
   package "installing : #{pkg}" do
     action :install
-    ignore_failue true
   end
 end
 
@@ -16,8 +15,6 @@ end
 bash "npm_install_it" do
   cwd "/root/prerender"
   command "npm install"
-  action :none
-  notifies :run, "template[compile_app_name]"
 end
 
 ["cron.rb", "start.sh"].each do |filename|
