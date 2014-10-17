@@ -1,10 +1,3 @@
-# install packages
-%w(git fontconfig fontconfig1-dev fontconfig1 screen zsh nodejs npm).each do |pkg|
-  package "#{pkg}" do
-    action :install
-  end
-end
-
 git "/root/prerender" do
   repository "https://github.com/prerender/prerender.git"
   revision "master"
