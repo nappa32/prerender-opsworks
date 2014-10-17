@@ -2,17 +2,16 @@ git "/root/prerender" do
   repository "https://github.com/prerender/prerender.git"
   revision "master"
   action :sync
-  notifies :run, "bash[npm_install_it]"
 end
 
 bash "npm_install_it" do
   cwd "/root/prerender"
-  command "npm install"
+  command "cd /root/prerender && npm install"
 end
 
 ["cron.rb", "start.sh"].each do |filename|
   template "/root/prerender/#{filename}" do
-    mode '0644'
+    mode '0755'
     source filename
   end
 end
