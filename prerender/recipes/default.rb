@@ -1,6 +1,6 @@
 # install packages
 %w(git fontconfig fontconfig1-dev fontconfig1 screen zsh nodejs npm).each do |pkg|
-  package "installing : #{pkg}" do
+  package "#{pkg}" do
     action :install
   end
 end
