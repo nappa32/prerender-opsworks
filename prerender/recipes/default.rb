@@ -1,5 +1,5 @@
 # install packages
-%(git fontconfig fontconfig1-dev fontconfig1 screen zsh nodejs npm).each do |pkg|
+%w(git fontconfig fontconfig1-dev fontconfig1 screen zsh nodejs npm).each do |pkg|
   package "installing : #{pkg}" do
     action :install
     ignore_failue true
