@@ -4,9 +4,20 @@ git "/root/prerender" do
   action :sync
 end
 
-bash "npm_install_it" do
+node['prerender'].each do |k,v|
+  bash "setup custom env settings : #{k}" do
+    code <<-EOF
+      export '#{k}'='#{v}' >> /root/prerender/env.sh
+    EOF
+    not_if "grep '#{k}'='#{v}' /root/prerender/env.sh"
+  end
+end
+
+bash "npm install" do
   cwd "/root/prerender"
-  command "cd /root/prerender && npm install"
+  code <<-EOF
+    npm install
+  EOF
 end
 
 ["cron.rb", "start.sh"].each do |filename|
