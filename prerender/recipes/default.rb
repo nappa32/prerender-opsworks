@@ -27,6 +27,31 @@ end
   end
 end
 
+bash "disable_all_plugins_and_server_start" do
+  cwd "/root/prerender"
+  code <<-EOH
+    cp -a server.js server.js.bak
+    cat server.js.bak |egrep -v -E "server.start|server.use" >  server.js
+  EOH
+end
+
+%w(whitelist removeScriptTags s3HtmlCache).each do |plugin|
+  bash "enable_plugin: #{plugin}" do
+    cwd "/root/prerender"
+    code <<-EOH
+      echo "server.use(prerender.#{plugin}());" >> server.js
+    EOH
+  end
+end
+
+bash "enable_server.start" do
+  cwd "/root/prerender"
+  code <<-EOH
+    echo "server.start();" >> server.js
+  EOH
+end
+
+
 cron "cronjob_to_monitor_process" do
   minute '*/1'
   user "root"
