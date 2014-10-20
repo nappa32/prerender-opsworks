@@ -7,7 +7,7 @@ end
 node['prerender'].each do |k,v|
   bash "setup custom env settings : #{k}" do
     code <<-EOF
-      export '#{k}'='#{v}' >> /root/prerender/env.sh
+      echo export '#{k}'='#{v}' >> /root/prerender/env.sh
     EOF
     not_if "grep '#{k}'='#{v}' /root/prerender/env.sh"
   end
