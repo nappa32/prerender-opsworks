@@ -51,6 +51,12 @@ bash "enable_server.start" do
   EOH
 end
 
+bash "enable_server.start" do
+  cwd "/root/prerender"
+  code <<-EOH
+    echo "server.start();" >> server.js
+  EOH
+end
 
 cron "cronjob_to_monitor_process" do
   minute '*/1'
