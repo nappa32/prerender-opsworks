@@ -64,3 +64,10 @@ cron "cronjob_to_monitor_process" do
   home "/root/prerender"
   command "/usr/local/bin/ruby /root/prerender/cron.rb"
 end
+
+cron "cronjob_to_kill_spare_processes_of_phantomjs" do
+  minute '*/5'
+  user "root"
+  home "/root/prerender"
+  command "kill -9 $(ps auxfe |grep \"/root/prerender/node_modules/phantomjs\"|awk '{print $2 \" \" $11}'|grep -vE '(\||\\)'|awk '{print $1}')"
+end
